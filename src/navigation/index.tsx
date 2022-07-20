@@ -1,109 +1,106 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
-import { Appbar } from 'react-native-paper';
+import { NavigationContainer, InitialState } from '@react-navigation/native';
+import { MD3LightTheme, MD3DarkTheme, } from 'react-native-paper';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { StatusBar } from 'expo-status-bar';
+// import { isWeb } from '../utils';
+
+import RootNavigator from './RootNavigation';
+import DrawerItems from './DrawerItems';
 
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+
+const PERSISTENCE_KEY = 'NAVIGATION_STATE';
+const PREFERENCES_KEY = 'APP_PREFERENCES';
+
+
+
+export const PreferencesContext = React.createContext<any>(null);
+
+
+
+const DrawerContent = () => {
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-    </NavigationContainer>
+    <PreferencesContext.Consumer>
+      {(preferences) => {
+        // console.log('preferences', preferences);
+        return (
+          <DrawerItems />
+        )
+      }}
+    </PreferencesContext.Consumer>
   );
-}
+};
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
-const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+
+const Drawer = createDrawerNavigator<{ Home: undefined }>();
+
+
+
+export default function Navigation() {
+  const [isReady, setIsReady] = React.useState(false);
+  const [initialState, setInitialState] = React.useState<
+    InitialState | undefined
+  >();
+
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  const themeMode = isDarkMode ? 'dark' : 'light';
+  const theme = {
+    light: MD3LightTheme,
+    dark: MD3DarkTheme,
+  }[themeMode];
+
+  React.useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
+        const state = JSON.parse(savedStateString || '');
+
+        setInitialState(state);
+      } catch (e) {
+        // ignore error
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    if (!isReady) {
+      restoreState();
+    }
+  }, [isReady]);
+
+  const preferences = React.useMemo(
+    () => ({
+      goToScreen: () => { },
+    }),
+    []
+  );
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
+    <PreferencesContext.Provider value={preferences}>
+      <NavigationContainer initialState={initialState}>
+
+        <Drawer.Navigator
+          drawerContent={() => <DrawerContent />}
+          useLegacyImplementation={true}
+        >
+          <Drawer.Screen
+            name="Home"
+            component={RootNavigator}
+            options={{ headerShown: false }}
+          />
+        </Drawer.Navigator>
+
+        {/* <RootNavigator /> */}
+
+        <StatusBar style={theme.dark ? 'light' : 'dark'} />
+      </NavigationContainer>
+    </PreferencesContext.Provider>
   );
-}
-
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
-  );
-}
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }

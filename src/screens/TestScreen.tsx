@@ -1,8 +1,9 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import type { RootStackScreenProps } from '../types';
 import { Button } from 'react-native-paper';
+import type { RootStackScreenProps } from '../types';
+
 
 
 const styles = StyleSheet.create({
@@ -22,19 +23,19 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-const NotFoundScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
+const TestScreen = ({ navigation }: RootStackScreenProps<'Test'>) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
-      <Button onPress={() => navigation.replace('Home')}>
-        Back To Home
-      </Button>
+      <Text style={styles.title}>This is Home Screen.</Text>
+      <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
     </View>
   );
 }
 
-NotFoundScreen.title = 'NotFound';
 
-export default NotFoundScreen;
+
+TestScreen.title = 'Test Screen';
+
+
+
+export default TestScreen;
