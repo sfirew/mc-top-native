@@ -24,7 +24,16 @@ export default function RootNavigator() {
 
             return (
               <Appbar.Header elevated>
-                {back ? (
+                <Appbar.Action
+                  icon="menu"
+                  isLeading
+                  onPress={() =>
+                    (
+                      navigation as any as DrawerNavigationProp<{}>
+                    ).openDrawer()
+                  }
+                />
+                {/* {back ? (
                   <Appbar.BackAction onPress={() => navigation.goBack()} />
                 ) : (navigation as any).openDrawer ? (
                   <Appbar.Action
@@ -36,7 +45,7 @@ export default function RootNavigator() {
                       ).openDrawer()
                     }
                   />
-                ) : null}
+                ) : null} */}
                 <Appbar.Content title={title} />
               </Appbar.Header>
             );
@@ -51,7 +60,10 @@ export default function RootNavigator() {
           key={id}
           name={id}
           component={screenList[id]}
-          options={{ title: screenList[id].title }}
+          options={{
+            title: screenList[id].title,
+            animation: 'fade',
+          }}
         />
       ))}
     </Stack.Navigator>

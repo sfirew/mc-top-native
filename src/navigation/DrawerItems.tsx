@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-navigation/drawer';
 import {
   Badge,
   Drawer,
@@ -9,32 +9,38 @@ import {
 } from 'react-native-paper';
 
 
+
 const DrawerItemsData = [
   {
     label: '首頁',
     icon: 'home-outline',
     key: 0,
+    link: 'Home',
     // right: () => <Text variant="labelLarge">44</Text>,
   },
   {
     label: '伺服器列表',
     icon: 'format-list-bulleted',
     key: 1,
+    link: 'Home',
   },
   {
     label: '統計資料',
     icon: 'chart-bell-curve-cumulative',
     key: 2,
+    link: 'Home',
   },
   {
     label: '伺服器監視器',
     icon: 'server',
     key: 3,
+    link: 'Home',
   },
   {
     label: '收藏',
     icon: 'bookmark-outline',
     key: 4,
+    link: 'SaveList',
   },
   // {
   //   label: 'Starred',
@@ -60,7 +66,10 @@ const DrawerItemsData = [
 
 
 
-const DrawerItems = () => {
+const DrawerItems = ({ ...props }: DrawerContentComponentProps) => {
+  const { navigation } = props;
+  // const navigation = useNavigation();
+
   const [drawerItemIndex, setDrawerItemIndex] = React.useState<number>(0);
 
   const _setDrawerItem = (index: number) => setDrawerItemIndex(index);
@@ -68,7 +77,7 @@ const DrawerItems = () => {
   const { colors } = useTheme();
 
   // console.log('colors', colors);
-  console.log('MD3Colors', MD3Colors);
+  // console.log('MD3Colors', MD3Colors);
 
   const coloredLabelTheme = {
     colors: {
@@ -95,7 +104,11 @@ const DrawerItems = () => {
             key={props.key}
             theme={props.key === drawerItemIndex ? coloredLabelTheme : undefined}
             active={drawerItemIndex === index}
-            onPress={() => _setDrawerItem(index)}
+            onPress={() => {
+              _setDrawerItem(index);
+
+              navigation.navigate(props.link || 'Home');
+            }}
           />
         ))}
       </Drawer.Section>

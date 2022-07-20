@@ -34,7 +34,7 @@ const TestScreen = ({ navigation }: RootStackScreenProps<'Test'>) => {
 
 
 
-TestScreen.title = 'Test Screen';
+TestScreen.title = '測試';
 
 
 

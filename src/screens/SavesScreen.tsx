@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
+const SaveListScreen = ({ navigation }: RootStackScreenProps<'SaveList'>) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This is Home Screen.</Text>
+      <Text style={styles.title}>收藏列表</Text>
       <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
     </View>
   );
@@ -34,8 +34,8 @@ const HomeScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
 
 
 
-HomeScreen.title = '首頁';
+SaveListScreen.title = '收藏';
 
 
 
-export default HomeScreen;
+export default SaveListScreen;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { NavigationContainer, InitialState } from '@react-navigation/native';
+import { NavigationContainer, InitialState, } from '@react-navigation/native';
 import { MD3LightTheme, MD3DarkTheme, } from 'react-native-paper';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -23,22 +23,7 @@ export const PreferencesContext = React.createContext<any>(null);
 
 
 
-const DrawerContent = () => {
-  return (
-    <PreferencesContext.Consumer>
-      {(preferences) => {
-        // console.log('preferences', preferences);
-        return (
-          <DrawerItems />
-        )
-      }}
-    </PreferencesContext.Consumer>
-  );
-};
-
-
-
-const Drawer = createDrawerNavigator<{ Home: undefined }>();
+const Drawer = createDrawerNavigator<{ Root: undefined }>();
 
 
 
@@ -85,13 +70,12 @@ export default function Navigation() {
   return (
     <PreferencesContext.Provider value={preferences}>
       <NavigationContainer initialState={initialState}>
-
         <Drawer.Navigator
-          drawerContent={() => <DrawerContent />}
+          drawerContent={(props) => <DrawerItems {...props} />}
           useLegacyImplementation={true}
         >
           <Drawer.Screen
-            name="Home"
+            name="Root"
             component={RootNavigator}
             options={{ headerShown: false }}
           />
