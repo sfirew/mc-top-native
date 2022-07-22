@@ -1,16 +1,14 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Text, View } from '../components/Themed';
-import { Button } from 'react-native-paper';
+import { Text } from '../components/Themed';
 import type { RootStackScreenProps } from '../types';
-
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import ScreenWrapper from '../components/Layout/ScreenWrapper';
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  content: {
+    padding: 12,
   },
   title: {
     fontSize: 20,
@@ -25,17 +23,40 @@ const styles = StyleSheet.create({
 
 const HomeScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>This is Home Screen.</Text>
+    <ScreenWrapper contentContainerStyle={styles.content}>
+      <Text style={styles.title}>首頁</Text>
+
+      <Card mode="contained" style={{ borderRadius: 24 }}>
+        <Card.Title title="Card Title" subtitle="Card Subtitle" />
+        <Card.Content>
+          <Title>Card title</Title>
+          <Paragraph>Card content</Paragraph>
+        </Card.Content>
+        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+        <Card.Actions>
+          <Button onPress={() => { }}>Cancel</Button>
+          <Button onPress={() => { }}>Ok</Button>
+        </Card.Actions>
+      </Card>
+
+      <Card style={{ marginTop: 24 }}>
+        <Card.Title title="Card Title" subtitle="Card Subtitle" />
+        <Card.Content>
+          <Title>Card title</Title>
+          <Paragraph>Card content</Paragraph>
+        </Card.Content>
+        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+        <Card.Actions>
+          <Button onPress={() => { }}>Cancel</Button>
+          <Button onPress={() => { }}>Ok</Button>
+        </Card.Actions>
+      </Card>
+
       <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
-    </View>
+    </ScreenWrapper>
   );
 }
 
-
-
 HomeScreen.title = '首頁';
-
-
 
 export default HomeScreen;

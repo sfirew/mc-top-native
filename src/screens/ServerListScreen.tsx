@@ -23,15 +23,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const SaveListScreen = ({ navigation }: RootStackScreenProps<'SaveList'>) => {
+const ServerListScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>收藏列表</Text>
+      <Text style={styles.title}>伺服器列表</Text>
       <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
     </View>
   );
 }
 
-SaveListScreen.title = '收藏';
+ServerListScreen.title = '伺服器列表';
 
-export default SaveListScreen;
+export default ServerListScreen;

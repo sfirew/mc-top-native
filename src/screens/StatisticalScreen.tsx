@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { Button } from 'react-native-paper';
@@ -23,15 +23,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const SaveListScreen = ({ navigation }: RootStackScreenProps<'SaveList'>) => {
+const StatisticalScreen = ({ navigation }: RootStackScreenProps<'SaveList'>) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>收藏列表</Text>
+      <Text style={styles.title}>統計資料</Text>
       <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
     </View>
   );
 }
 
-SaveListScreen.title = '收藏';
+StatisticalScreen.title = '統計資料';
 
-export default SaveListScreen;
+export default StatisticalScreen;

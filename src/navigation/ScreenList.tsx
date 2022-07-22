@@ -1,16 +1,20 @@
 import * as React from 'react';
-import HomeScreen from '../screens/HomeScreen';
-import SaveListScreen from '../screens/SavesScreen';
-import TestScreen from '../screens/TestScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
 
+import HomeScreen from '../screens/HomeScreen';
+import ServerListScreen from '../screens/ServerListScreen';
+import SaveListScreen from '../screens/SavesScreen';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import StatisticalScreen from '../screens/StatisticalScreen';
+import MonitorScreen from '../screens/MonitorScreen';
 
 export const screenList: Record<
   string,
   React.ComponentType<any> & { title: string }
 > = {
-  Test: TestScreen,
-  SaveList: SaveListScreen,
   Home: HomeScreen,
+  Statistical: StatisticalScreen,
+  ServerList: ServerListScreen,
+  Monitor: MonitorScreen,
+  SaveList: SaveListScreen,
   NotFound: NotFoundScreen,
 };

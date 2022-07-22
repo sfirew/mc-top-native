@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { Button } from 'react-native-paper';
@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 8,
   },
   title: {
     fontSize: 20,
@@ -23,15 +24,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const SaveListScreen = ({ navigation }: RootStackScreenProps<'SaveList'>) => {
+const MonitorScreen = ({ navigation }: RootStackScreenProps<'SaveList'>) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>收藏列表</Text>
+      <Text style={styles.title}>伺服器監視器</Text>
       <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
     </View>
   );
 }
 
-SaveListScreen.title = '收藏';
+MonitorScreen.title = '伺服器監視器';
 
-export default SaveListScreen;
+export default MonitorScreen;

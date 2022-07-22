@@ -22,19 +22,19 @@ const DrawerItemsData = [
     label: '伺服器列表',
     icon: 'format-list-bulleted',
     key: 1,
-    link: 'Home',
+    link: 'ServerList',
   },
   {
     label: '統計資料',
     icon: 'chart-bell-curve-cumulative',
     key: 2,
-    link: 'Home',
+    link: 'Statistical',
   },
   {
     label: '伺服器監視器',
     icon: 'server',
     key: 3,
-    link: 'Home',
+    link: 'Monitor',
   },
   {
     label: '收藏',
