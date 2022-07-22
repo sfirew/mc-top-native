@@ -18,6 +18,13 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
   Home: undefined;
+  Server: {
+    host: string;
+  };
+  Search: {
+    searchString: string;
+  };
+  Monitor: undefined;
   Test: undefined;
   SaveList: undefined;
 };
@@ -26,6 +33,10 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
   RootStackParamList,
   Screen
 >;
+
+// export type ServerParamList = {
+//   host: undefined | string;
+// };
 
 export type RootTabParamList = {
   TabOne: undefined;

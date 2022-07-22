@@ -1,9 +1,12 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, Image } from 'react-native';
 
-import { Text } from '../components/Themed';
+// import { Text } from '../components/Themed';
 import type { RootStackScreenProps } from '../types';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Text, Button, Card, Title, Paragraph } from 'react-native-paper';
 import ScreenWrapper from '../components/Layout/ScreenWrapper';
+import { TextInput } from 'react-native-paper';
+import { View } from 'react-native';
 
 
 const styles = StyleSheet.create({
@@ -19,40 +22,80 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  searchBar: {
+    borderRadius: 20,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  grassLogo: {
+    width: 200,
+    height: 200,
+    justifyContent: 'center'
+  },
 });
 
 const HomeScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
+  const [searchString, setSearching] = React.useState("");
+
+  const handleSearch = (searchString: string) => {
+    if(searchString !== '') {
+      console.log('you pressed search');
+      console.log('string', searchString);
+
+      navigation.push('Search', {
+        searchString: searchString,
+      });
+    }
+  }
+
   return (
     <ScreenWrapper contentContainerStyle={styles.content}>
-      <Text style={styles.title}>首頁</Text>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.grassLogo}
+          source={require('../../assets/images/Grass_Block.png')}
+        />
+      </View>
 
-      <Card mode="contained" style={{ borderRadius: 24 }}>
-        <Card.Title title="Card Title" subtitle="Card Subtitle" />
-        <Card.Content>
-          <Title>Card title</Title>
-          <Paragraph>Card content</Paragraph>
-        </Card.Content>
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Actions>
-          <Button onPress={() => { }}>Cancel</Button>
-          <Button onPress={() => { }}>Ok</Button>
-        </Card.Actions>
-      </Card>
+      <Text
+        variant="headlineMedium"
+        style={{ marginTop: 30, textAlign: 'center', fontWeight: 'bold' }}
+      >
+        搜尋 Minecraft 伺服器
+      </Text>
 
-      <Card style={{ marginTop: 24 }}>
-        <Card.Title title="Card Title" subtitle="Card Subtitle" />
-        <Card.Content>
-          <Title>Card title</Title>
-          <Paragraph>Card content</Paragraph>
-        </Card.Content>
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Actions>
-          <Button onPress={() => { }}>Cancel</Button>
-          <Button onPress={() => { }}>Ok</Button>
-        </Card.Actions>
-      </Card>
+      <Text
+        variant="bodyMedium"
+        style={{ marginTop: 20, textAlign: 'center' }}
+      >
+        輸入 ip 位置或伺服器位址！
+      </Text>
+      <Text
+        variant="bodyMedium"
+        style={{ marginTop: 8, textAlign: 'center' }}
+      >
+        即可查看 Minecraft 伺服器的即時狀態。
+      </Text>
 
-      <Button onPress={() => navigation.push('NotFound')} mode="outlined">go to not found</Button>
+      <TextInput
+        value={searchString}
+        onChangeText={text => setSearching(text)}
+        mode="outlined"
+        placeholder="Minecraft 伺服器位址 | 名稱 | 版本 | 類型"
+        style={{
+          marginTop: 16,
+        }}
+      />
+
+      <Button
+        onPress={() => handleSearch(searchString)}
+        mode="outlined"
+        style={{ marginTop: 20 }}
+      >
+        搜尋
+      </Button>
     </ScreenWrapper>
   );
 }
