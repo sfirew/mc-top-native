@@ -1,13 +1,11 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 
 // import { Text } from '../components/Themed';
 import type { RootStackScreenProps } from '../types';
 import { Text, Button, Card, Title, Paragraph } from 'react-native-paper';
 import ScreenWrapper from '../components/Layout/ScreenWrapper';
-import { TextInput } from 'react-native-paper';
-import { View } from 'react-native';
-
+import SearchBar from '../components/Elements/SearchBar';
 
 const styles = StyleSheet.create({
   content: {
@@ -21,9 +19,6 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
-  },
-  searchBar: {
-    borderRadius: 20,
   },
   imageContainer: {
     justifyContent: 'center',
@@ -40,7 +35,7 @@ const HomeScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
   const [searchString, setSearching] = React.useState("");
 
   const handleSearch = (searchString: string) => {
-    if(searchString !== '') {
+    if (searchString !== '') {
       console.log('you pressed search');
       console.log('string', searchString);
 
@@ -79,11 +74,9 @@ const HomeScreen = ({ navigation }: RootStackScreenProps<'Home'>) => {
         即可查看 Minecraft 伺服器的即時狀態。
       </Text>
 
-      <TextInput
-        value={searchString}
-        onChangeText={text => setSearching(text)}
-        mode="outlined"
-        placeholder="Minecraft 伺服器位址 | 名稱 | 版本 | 類型"
+      <SearchBar
+        searchString={searchString}
+        handleSetSearchString={setSearching}
         style={{
           marginTop: 16,
         }}

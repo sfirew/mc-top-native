@@ -78,12 +78,13 @@ const DrawerItems = ({ ...props }: DrawerContentComponentProps) => {
 
   // console.log('colors', colors);
   // console.log('MD3Colors', MD3Colors);
+  const theme = useTheme();
 
   const coloredLabelTheme = {
     colors: {
       // secondaryContainer: MD3Colors.neutral90,
-      secondaryContainer: MD3Colors.neutralVariant90,
-      onSecondaryContainer: MD3Colors.tertiary20,
+      secondaryContainer: theme.colors.secondaryContainer,
+      onSecondaryContainer: theme.colors.onSecondaryContainer,
     }
   };
 

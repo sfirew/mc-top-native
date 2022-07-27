@@ -12,13 +12,33 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    elevation: {
+      "level0": "transparent",
+      "level1": "rgb(247, 243, 249)",
+      "level2": "rgb(243, 237, 246)",
+      "level3": "rgb(238, 232, 244)",
+      "level4": "rgb(236, 230, 243)",
+      "level5": "rgb(233, 227, 241)",
+    },
+
     primary: '#2a877c',
-    // secondary: '#2962ff',
-    // accent: '#8c9eff',
-    // anchor: '#8c9eff',
-    // error: '#b71c1c',
+    primaryContainer: '#73f8e6',
+    onPrimaryContainer: '#00201c',
+
+    secondary: '#4a635f',
+    secondaryContainer: '#cce8e2',
+    onSecondaryContainer: '#05201c',
+
+    tertiary: '#46617a',
+    tertiaryContainer: '#ffffff',
+    onTertiaryContainer: '#cce5ff',
+
+    error: '#ba1a1a',
+    background: '#fafdfb',
   },
 };
+
+// console.log('DefaultTheme', DefaultTheme.colors);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
